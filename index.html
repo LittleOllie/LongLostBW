@@ -249,8 +249,6 @@ button:hover {
             <img id="hand-bw" alt="">
             <img id="ball-bw" alt="">
         </div>
-
-        <button id="randomButton" onclick="randomizeCharacter()">Randomize</button>
         <button id="saveButton" onclick="saveCharacterImage()">Save Character</button>
     </div>
 
@@ -412,102 +410,6 @@ button:hover {
         }).catch(error => console.error('Error capturing canvas:', error));
     }
 
-
-<script>
-    function randomizeCharacter() {
-        const traits = {
-            background: [
-                "BACKGROUNDS/1BW.PNG", "BACKGROUNDS/2BW.PNG", "BACKGROUNDS/5BW.PNG"
-            ],
-            skin: [
-                "SKIN/1BW.PNG", "SKIN/EBW.PNG", "SKIN/ABW.PNG", "SKIN/IBW.PNG",
-                "SKIN/CBW.PNG", "SKIN/DBW.PNG", "SKIN/HBW.PNG"
-            ],
-            face: [
-                "FACE/1.PNG", "FACE/1A.PNG", "FACE/2.PNG", "FACE/3.PNG",
-                "FACE/4.PNG", "FACE/5.PNG", "FACE/6.PNG", "FACE/7.PNG",
-                "FACE/A.PNG", "FACE/B.PNG", "FACE/CBW.PNG", "FACE/D.PNG",
-                "FACE/E.PNG", "FACE/F.PNG"
-            ],
-            clothing: [
-                "CLOTHING/1BW.PNG", "CLOTHING/1ABW.PNG", "CLOTHING/ABW.PNG",
-                "CLOTHING/BBW.PNG", "CLOTHING/EBW.PNG", "CLOTHING/FBW.PNG",
-                "CLOTHING/GBW.PNG", "CLOTHING/HBW.PNG", "CLOTHING/IBW.PNG",
-                "CLOTHING/JBW.PNG", "CLOTHING/KBW.PNG", "CLOTHING/LBW.PNG",
-                "CLOTHING/MBW.PNG", "CLOTHING/NBW.PNG", "CLOTHING/PBW.PNG"
-            ],
-            hair: [
-                "HAIR/A.PNG", "HAIR/29.PNG", "HAIR/33.PNG", "HAIR/37.PNG",
-                "HAIR/41.PNG", "HAIR/45.PNG", "HAIR/49.PNG", "HAIR/53.PNG",
-                "HAIR/57.PNG", "HAIR/61.PNG"
-            ],
-            hairhoodie: [
-                "HAIRHOODIEUP/A.PNG", "HAIRHOODIEUP/9.PNG", "HAIRHOODIEUP/13.PNG",
-                "HAIRHOODIEUP/21.PNG", "HAIRHOODIEUP/17.PNG", "HAIRHOODIEUP/1.PNG",
-                "HAIRHOODIEUP/5.PNG", "HAIRHOODIEUP/25.PNG"
-            ],
-            hat: [
-                "HATS/A.PNG", "HATS/CBW.PNG", "HATS/EBW.PNG", "HATS/FBW.PNG",
-                "HATS/IBW.PNG", "HATS/JBW.PNG", "HATS/HBW.PNG", "HATS/KBW.PNG"
-            ],
-            hathoodie: [
-                "HATS/CBW.PNG", "HATS/JBW.PNG", "HATS/KBW.PNG"
-            ],
-            accessories: [
-                "GLASSES/A.PNG", "GLASSES/ABW.PNG", "GLASSES/BBW.PNG",
-                "GLASSES/CBW.PNG", "GLASSES/DBW.PNG"
-            ],
-            hand: [
-                "HANDS/A.PNG", "HANDS/0BW.PNG", "HANDS/1BW.PNG", "HANDS/2BW.PNG",
-                "HANDS/3BW.PNG", "HANDS/4BW.PNG", "HANDS/5BW.PNG", "HANDS/6BW.PNG",
-                "HANDS/7BW.PNG", "HANDS/8BW.PNG", "HANDS/9BW.PNG"
-            ]
-        };
-
-        const selectRandomTrait = (category) => {
-            const options = traits[category];
-            const randomIndex = Math.floor(Math.random() * options.length);
-            return options[randomIndex];
-        };
-
-        // Randomize traits
-        selectTrait('background', selectRandomTrait('background'));
-        selectTrait('skin', selectRandomTrait('skin'));
-        selectTrait('face', selectRandomTrait('face'));
-        selectTrait('clothing', selectRandomTrait('clothing'));
-
-        // Randomize hair and hat traits
-        if (Math.random() < 0.5) {
-            selectTrait('hair', selectRandomTrait('hair'));
-            selectTrait('hat', ''); // Clear hat
-        } else {
-            selectTrait('hat', selectRandomTrait('hat'));
-            selectTrait('hair', ''); // Clear hair
-        }
-
-        // Randomize hair and hat for hoodies
-        if (Math.random() < 0.5) {
-            selectTrait('hairhoodie', selectRandomTrait('hairhoodie'));
-            selectTrait('hathoodie', ''); // Clear hat for hoodie
-        } else {
-            selectTrait('hathoodie', selectRandomTrait('hathoodie'));
-            selectTrait('hairhoodie', ''); // Clear hair for hoodie
-        }
-
-        // Randomize optional traits
-        if (Math.random() < 0.5) {
-            selectTrait('accessories', selectRandomTrait('accessories'));
-        } else {
-            selectTrait('accessories', '');
-        }
-
-        if (Math.random() < 0.5) {
-            selectTrait('hand', selectRandomTrait('hand'));
-        } else {
-            selectTrait('hand', '');
-        }
-    }
 </script>
-
 </body>
 </html>
