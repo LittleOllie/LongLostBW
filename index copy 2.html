@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Character Creator</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
+<style>
+    body {
+        font-family: 'Fredoka One', cursive, sans-serif;
+        background-image: linear-gradient(to right, #89f7fe, #66a6ff);
+        color: #333;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        overflow-x: hidden;
+    }
+    #headerImage {
+        margin-top: 0px;
+        width: auto;
+        height: 285px;
+    }
+    #mainContent {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: flex-start;
+        width: 100%;
+        margin-top: 0px;
+        flex-wrap: wrap;
+    }
+    #traitSelection {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(3, auto);
+        gap: 0px;
+        justify-items: center;
+        padding: 0px;
+        background: linear-gradient(to bottom, #89f7fe, #66a6ff);
+        border-radius: 60px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    .category-button {
+        margin: 5px;
+        padding: 10px 20px;
+        font-size: 23px;
+        border-radius: 30px;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+    .category-button:hover {
+        opacity: 0.8;
+    }
+    #characterDisplayContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 0 20px;
+        order: 2;
+    }
+    #characterDisplay {
+        position: relative;
+        width: 700px;
+        height: 700px;
+        border: 2px solid #666;
+        background-color: #fff;
+        box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+        margin-bottom: 20px;
+    }
+    #characterDisplay img {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
+    button {
+        margin: 10px;
+        padding: 15px 30px;
+        font-size: 20px;
+        border-radius: 10px;
+        background-color: #f39c12;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+    button:hover {
+        background-color: #e67e22;
+    }
+    #saveButton, #saveBWButton {
+        margin-top: 20px;
+    }
+</style>
+</head>
+<body>
+<img id="headerImage" src="HEADER/1.PNG" alt="CREATE YOUR OWN LITTLE OLLIE">
+<div id="mainContent">
+    <div id="traitSelection">
+        <!-- Buttons for traits -->
+        <button class="category-button background-button" onclick="showCategory('backgroundCategory')">BACKGROUNDS</button>
+        <button class="category-button skin-button" onclick="showCategory('skinCategory')">SKIN TONE</button>
+        <button class="category-button face-button" onclick="showCategory('faceCategory')">FACE</button>
+        <button class="category-button hair-button" onclick="showCategory('hairCategory')">HAIRSTYLES</button>
+        <button class="category-button hat-button" onclick="showCategory('hatCategory')">HEADWEAR</button>
+        <button class="category-button clothing-button" onclick="showCategory('clothingCategory')">CLOTHING</button>
+        <button class="category-button accessories-button" onclick="showCategory('accessoriesCategory')">ACCESSORIES</button>
+        <button class="category-button hand-button" onclick="showCategory('handCategory')">HAND GESTURES</button>
+        <button class="category-button ball-button" onclick="showCategory('ballCategory')">BALLS</button>
+    </div>
+    <div id="characterDisplayContainer">
+        <div id="characterDisplay">
+            <img id="background" alt="">
+            <img id="skin" alt="">
+            <img id="face" alt="">
+            <img id="hair" alt="">
+            <img id="hat" alt="">
+            <img id="clothing" alt="">
+            <img id="accessories" alt="">
+            <img id="hand" alt="">
+            <img id="ball" alt="">
+        </div>
+        <button id="saveButton" onclick="saveCharacterImage()">Save Character</button>
+        <button id="saveBWButton" onclick="saveBlackAndWhite()">Save Black & White</button>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script>
+    function selectTrait(category, filename) {
+        if (filename) {
+            document.getElementById(category).src = filename;
+        }
+    }
+    function showCategory(categoryId) {
+        document.querySelectorAll('.trait-category').forEach(category => {
+            category.classList.remove('active');
+        });
+        document.getElementById(categoryId).classList.add('active');
+    }
+    function saveCharacterImage() {
+        html2canvas(document.getElementById("characterDisplay"), { scale: 1 }).then(canvas => {
+            let link = document.createElement('a');
+            link.download = 'my-character.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }).catch(error => console.error('Error capturing canvas:', error));
+    }
+    function saveBlackAndWhite() {
+        html2canvas(document.getElementById("characterDisplay"), { scale: 1 }).then(canvas => {
+            const ctx = canvas.getContext("2d");
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const data = imageData.data;
+
+            for (let i = 0; i < data.length; i += 4) {
+                const grayscale = data[i] * 0.3 + data[i + 1] * 0.59 + data[i + 2] * 0.11;
+                data[i] = grayscale;
+                data[i + 1] = grayscale;
+                data[i + 2] = grayscale;
+            }
+            ctx.putImageData(imageData, 0, 0);
+
+            let link = document.createElement("a");
+            link.download = "my-character-bw.png";
+            link.href = canvas.toDataURL("image/png");
+            link.click();
+        }).catch(error => console.error("Error capturing canvas in grayscale:", error));
+    }
+</script>
+</body>
+</html>
